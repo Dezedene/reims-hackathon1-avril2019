@@ -16,6 +16,10 @@
     font-size: 0.6rem;
 }
 
+.eggsDisplayAttack{
+    display: none;
+}
+
 .Row{
     margin: 5px;
 }

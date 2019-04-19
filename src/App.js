@@ -105,11 +105,15 @@ class App extends Component {
   selectCharacter = (character) => {
     this.state.selectedEggs.length < 1 && this.setState({ isSelectedCharacter: [...this.state.isSelectedCharacter, character] })
     this.state.isSelectedCharacter.length === 0 && this.setState({ isCharacterSelected: true })
+    
     !this.state.isCharacterSelected && this.setState({isSelectCharacterIA : this.state.charactersRandomizedFromApi[3]})
   }
 
 
   render() {
+
+    const hideEggsPower = this.state.selectedEggs.length < 3 ? "eggsDisplayAttack" : "eggsText";
+
     return (
       <div className="App battleField">
 
@@ -129,24 +133,32 @@ class App extends Component {
                       {this.state.eggsRandomizedFromApi.length === 0 ? <p>loading</p> : this.state.eggsRandomizedFromApi.map(egg => <DisplayEgg key={egg.id} egg={egg} onSelectEgg={this.selectEgg} />)
                       }
                     </Row>
-                  </Container>
+            </Container>
                 }
 
-        {this.state.isBattlefieldDisplayed && <Container fluid>
-        <Row>
+        {this.state.isBattlefieldDisplayed &&
+        <Container fluid>
+          <Row>
             <Col xs={2}>
               <div className="user1 d-flex align-items-center bg-dark">
                 {this.state.charactersRandomizedFromApi.length === 0 ? <p>Wait</p>
-                  : <Ia hitMethod={() => this.throwEggsToIA()} IAHitpoints={this.state.userHitpoints} IAName={this.state.isSelectedCharacter[0]} />} </div></Col>
+                  : <Ia hitMethod={() => this.throwEggsToIA()} IAHitpoints={this.state.userHitpoints}
+                  IAName={this.state.isSelectedCharacter[0]} />} </div>
+            </Col>
+
             <Col xs={2}>
               <div >
-                {this.state.selectedEggs.length === 0 ? <p>Wait..</p> : this.state.selectedEggs.map(egg => <DisplayEgg egg={egg} onSelectEgg={console.log("coucou")} />)}  </div></Col>
+                {this.state.selectedEggs.length === 0 ? <p>Wait..</p> : this.state.selectedEggs.map(egg => <DisplayEgg egg={egg}
+                onSelectEgg={console.log("")} hideEggsPower={hideEggsPower}/>)} </div></Col>
             <Col offset={6} />
 
             <Col xs={2}>
               <div className="user2 d-flex align-items-center bg-dark">{this.state.charactersRandomizedFromApi.length === 0 ? <p>Wait</p>
-                : <Ia hitMethod={() => this.throwEggsToUser()} IAHitpoints={this.state.IAHitpoints} IAName={this.state.isSelectCharacterIA} />} </div></Col>
+                : <Ia hitMethod={() => this.throwEggsToUser()} IAHitpoints={this.state.IAHitpoints}
+                IAName={this.state.isSelectCharacterIA} />} </div>
+            </Col>
 
+            
           </Row>
         </Container>
       }
