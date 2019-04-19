@@ -28,6 +28,7 @@ class App extends Component {
         name: "Clément Bechetoille",
       },
       displayNoneButton : true,
+      nightModeactive : false,
     }
   }
   componentDidMount() {
@@ -121,10 +122,16 @@ class App extends Component {
     this.setState({userHitpoints: "20",})
   }
 
+    nightMode = () => {
+      this.setState({nightModeactive : !this.state.nightModeactive})
+    }
 
   render() {
+    const behaviorBody = !this.state.nightModeactive ? "App battleField" : "App appnight"
+    const behaviorCard = !this.state.nightModeactive ? "warning" : "primary"
     return (
-      <div className="App battleField">
+      <div className={behaviorBody}>
+        <button className="buttonNight" onClick={() => this.nightMode()}>Night mode</button>
 
         {!this.state.isCharacterSelected && <Container>
           <Row>
@@ -142,7 +149,7 @@ class App extends Component {
           <Row>
             {this.state.eggsRandomizedFromApi.length === 0 
             ? <p>loading</p> 
-            : this.state.eggsRandomizedFromApi.map(egg => <DisplayEgg key={egg.id} egg={egg} 
+            : this.state.eggsRandomizedFromApi.map(egg => <DisplayEgg key={egg.id} egg={egg} night={behaviorCard} 
                                                                       areEggsSelected={this.state.selectedEggs} 
                                                                       onSelectEgg={this.selectEgg} />)
             }
@@ -172,7 +179,7 @@ class App extends Component {
                  : this.state.selectedEggs.length === 0 
                  ? <p className="noMoreEggs"></p> 
                  : this.state.selectedEggs.map(egg => <DisplayEgg isBattlefieldDisplayed={this.state.isBattlefieldDisplayed}
-                                                                  key={egg.id} egg={egg}/>)}  
+                  night={behaviorCard} key={egg.id} egg={egg}/>)}  
               </div>
             </Col>
             
@@ -184,7 +191,7 @@ class App extends Component {
                   : this.state.selectedEggsIA.length === 0 
                   ? <p className="noMoreEggs"></p> 
                   : this.state.selectedEggsIA.map(egg => <DisplayEgg isBattlefieldDisplayed={this.state.isBattlefieldDisplayed} 
-                                                                     key={egg.id} egg={egg}/>)}  </div></Col>
+                    night={behaviorCard} key={egg.id} egg={egg}/>)}  </div></Col>
             
             <Col xs={2}>
               <div className="user2 d-flex align-items-center bg-dark">{this.state.charactersRandomizedFromApi.length === 0 

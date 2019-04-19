@@ -1,5 +1,6 @@
 .App {
   text-align: center;
+  transition-timing-function: ease-out
 }
 .user1, .user2{
  height:100vh;
@@ -72,4 +73,13 @@
 
 .imgSize{
   height: 12rem;
+}
+
+.appnight{
+  background-color: #343a40;
+  color: #ffffff;
+}
+.buttonNight.hover {
+  background: #00151f;
+  border: 2px solid #fff;
 }
